@@ -1,7 +1,7 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import { User } from '../user.model';
 import {DeleteUserGroupComponent} from '../delete-user-group/delete-user-group.component';
-
+import { Group } from  '../group.model';
 
 @Component({
   selector: 'app-users',
@@ -24,6 +24,8 @@ export class UsersComponent implements OnInit {
   ];
   private delUsers: User[] = [];
 
+  private groups: Group[] = [];
+
   constructor() { }
 
   ngOnInit() {
@@ -36,7 +38,25 @@ export class UsersComponent implements OnInit {
 
   getDelUser(delUsers: User) {
     this.delUsers.push(delUsers);
-    console.log(this.delUsers);
   }
 
+  onDelUser(n: number) {
+    this.getUser(this.delUsers[n]);
+    this.delUsers.splice(n, 1);
+  }
+
+  getUser(users: User) {
+    this.users.push(users);
+  }
+
+  onGroup(){
+    let numberOfGroups: number;
+    console.log(this.users.length);
+    this.users.length % 4 === 0 ? numberOfGroups = this.users.length/4 : numberOfGroups = Math.floor(this.users.length/4);
+    this.getGroups(numberOfGroups)
+    }
+
+  getGroups(numberOfGroups: number) {
+    ;
+  }
 }

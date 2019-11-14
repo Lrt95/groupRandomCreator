@@ -1,14 +1,23 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-7">
+    <div class="col-xs-7" style="padding: 2rem">
+      <h2>Présent</h2>
       <ul class="list-group">
         <li class="list-group" *ngFor="let user of users, let i = index">
           <a href="#" (click)="onUser(i)" style="cursor: pointer">{{ user.name }}</a>
         </li>
+      </ul>
+    </div>
+    <div class="col-xs-7" style="padding: 2rem">
+      <h2>Absent</h2>
+      <ul class="list-group">
         <li class="list-group" *ngFor="let delUser of delUsers, let n = index">
-          <a href="#" style="cursor: pointer">{{ delUser.name }}</a>
+          <a href="#" (click)="onDelUser(n)" style="cursor: pointer">{{ delUser.name }}</a>
         </li>
       </ul>
     </div>
+  </div>
+  <div class="row">
+    <button class="btn btn-primary" (click)="onGroup()">GROUP</button>
   </div>
 </div>
