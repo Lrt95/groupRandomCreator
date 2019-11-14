@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { GroupComponent } from './group/group.component';
 import { HeaderComponent } from './header/header.component';
-import { UserEditComponent } from './users/user-edit/user-edit.component';
+import { DeleteUserGroupComponent } from './delete-user-group/delete-user-group.component';
+
 
 @NgModule({
   declarations: [
@@ -13,12 +14,12 @@ import { UserEditComponent } from './users/user-edit/user-edit.component';
     UsersComponent,
     GroupComponent,
     HeaderComponent,
-    UserEditComponent
+    DeleteUserGroupComponent
   ],
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [DeleteUserGroupComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
