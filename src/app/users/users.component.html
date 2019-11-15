@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row" *ngIf="!groupeSelect">
     <div class="col-xs-7" style="padding: 2rem">
       <h2>Présent</h2>
       <ul class="list-group">
@@ -18,6 +18,16 @@
     </div>
   </div>
   <div class="row">
-    <button class="btn btn-primary" (click)="onGroup()">GROUP</button>
+    <button *ngIf="!groupeSelect" class="btn btn-primary" (click)="onGroup()">GROUP</button>
+  </div>
+  <div class="row">
+    <div class="col-xs-7">
+      <ul class="list-group list-group-horizontal">
+        <li class="list-group-item" style="margin: 5px" *ngFor="let group of groups">
+          <p>Groupe : {{ group.groupName }}</p>
+          <p *ngFor="let member of group.member">{{ member.name }}</p>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
