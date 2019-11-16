@@ -4,7 +4,7 @@
       <h2>Présent</h2>
       <ul class="list-group">
         <li class="list-group" *ngFor="let user of users, let i = index">
-          <a href="#" (click)="onUser(i)" style="cursor: pointer">{{ user.name }}</a>
+          <a href="#" (click)="onUser(i)" style="cursor: pointer"><img [src]="user.imagePath" height="50" width="50" >{{ user.name }}</a>
         </li>
       </ul>
     </div>
@@ -12,7 +12,7 @@
       <h2>Absent</h2>
       <ul class="list-group">
         <li class="list-group" *ngFor="let delUser of delUsers, let n = index">
-          <a href="#" (click)="onDelUser(n)" style="cursor: pointer">{{ delUser.name }}</a>
+          <a href="#" (click)="onDelUser(n)" style="cursor: pointer"><img [src]="delUser.imagePath" height="50" width="50" >{{ delUser.name }}</a>
         </li>
       </ul>
     </div>
@@ -25,7 +25,7 @@
       <ul class="list-group list-group-horizontal">
         <li class="list-group-item" style="margin: 5px" *ngFor="let group of groups">
           <p>Groupe : {{ group.groupName }}</p>
-          <p *ngFor="let member of group.member">{{ member.name }}</p>
+          <p *ngFor="let member of group.member"><img [src]="member.imagePath" height="50" width="50" >{{ member.name }}</p>
         </li>
       </ul>
     </div>
