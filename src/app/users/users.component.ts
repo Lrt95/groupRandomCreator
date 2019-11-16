@@ -32,11 +32,11 @@ export class UsersComponent implements OnInit {
     new User('Roxane Clavier', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
     new User('Sarah Hayat', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
     new User('Juan', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
-    new User('Test 23', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
-    new User('Test 24', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
-    new User('Test 25', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
-    new User('Test 26', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
-    new User('Test 27', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
+    new User('Erwan', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
+    new User('Billy', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
+    new User('Ilias', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
+    new User('Lionel', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
+
   ];
   private delUsers: User[] = [];
   private RandomUsers: User[];
@@ -69,20 +69,20 @@ export class UsersComponent implements OnInit {
 
   onGroup() {
     let numberOfGroups: number;
-    this.users.length % 4 === 0 ? numberOfGroups = this.users.length / 4 : numberOfGroups = Math.floor(this.users.length / 4);
+    numberOfGroups = Math.floor(this.users.length / 4);
     this.getGroups(numberOfGroups);
     this.groupeSelect = true;
     }
 
-  randomEtudiant(array) {
+  randomEtudiant(users) {
     let rand;
     let index = -1;
-    const length = array.length;
+    const length = users.length;
     const result = Array(length);
     while (++index < length) {
       rand = Math.floor(Math.random() * (index + 1));
       result[index] = result[rand];
-      result[rand] = array[index];
+      result[rand] = users[index];
     }
     return result;
   }

@@ -3,7 +3,7 @@
     <div class="col-xs-7" style="padding: 2rem">
       <h2>Présent</h2>
       <ul class="list-group">
-        <li class="list-group" *ngFor="let user of users, let i = index">
+        <li class="list-group" *ngFor="let user of users, let i = index" style="margin:  2px">
           <a href="#" (click)="onUser(i)" style="cursor: pointer"><img [src]="user.imagePath" height="50" width="50" >{{ user.name }}</a>
         </li>
       </ul>
@@ -11,7 +11,7 @@
     <div class="col-xs-7" style="padding: 2rem">
       <h2>Absent</h2>
       <ul class="list-group">
-        <li class="list-group" *ngFor="let delUser of delUsers, let n = index">
+        <li class="list-group" *ngFor="let delUser of delUsers, let n = index" style="margin:  2px">
           <a href="#" (click)="onDelUser(n)" style="cursor: pointer"><img [src]="delUser.imagePath" height="50" width="50" >{{ delUser.name }}</a>
         </li>
       </ul>
