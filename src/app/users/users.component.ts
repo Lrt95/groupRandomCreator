@@ -69,7 +69,8 @@ export class UsersComponent implements OnInit {
 
   onGroup() {
     let numberOfGroups: number;
-    numberOfGroups = Math.floor(this.users.length / 4);
+    numberOfGroups = this.users.length / 4;
+    numberOfGroups > 1 ? numberOfGroups = Math.floor(numberOfGroups) : numberOfGroups = Math.round(numberOfGroups)
     this.getGroups(numberOfGroups);
     this.groupeSelect = true;
     }
@@ -90,13 +91,16 @@ export class UsersComponent implements OnInit {
     this.groups = [];
     this.RandomUsers = this.randomEtudiant(this.users);
     let selectGroup = 0;
-    for (let groupName = 1 ; groupName <= numberOfGroups + 1; groupName++) {
+    for (let groupName = 1 ; groupName <= numberOfGroups + 1  ; groupName++) {
       this.groups.push(new Group(groupName, '', []));
       this.groups[selectGroup].member = this.RandomUsers.splice(0, 4);
       selectGroup++;
     }
-    this.groups[numberOfGroups].member.length  <= 2 ? this.getRegroup(this.groups , numberOfGroups) : this.groups = this.groups;
-    console.log(this.groups);
+    if (this.groups[numberOfGroups].member.length  <= 2 &&  this.groups[numberOfGroups].member.length > 0) {
+      this.getRegroup(this.groups , numberOfGroups);
+    } else if ( this.groups[numberOfGroups].member.length === 0) {
+      this.groups.pop();
+    }
   }
 
   getRegroup(group: Group[], numberOfGroups: number) {
