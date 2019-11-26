@@ -12,7 +12,7 @@ export class UsersComponent implements OnInit {
   private users: User[] = [
     new User('Adrian Duveau', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
     new User('Alyssia PH', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
-    new User('Antony Correia', 'https://svgsilh.com/svg_v2/2162179.svg'),
+    new User('Antony Correia', 'https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-1/p100x100/66658111_10217851026740184_2823897424676782080_n.jpg?_nc_cat=105&_nc_oc=AQmLshMClxdC5N4C6LbGolwSvWpBX4FhVzJViCIJH_8-xnZmrYqDzQH735m9TY5du6E&_nc_ht=scontent-cdg2-1.xx&oh=481004cb7d1777135422d26577fbd643&oe=5E40C942'),
     new User('Marine Bijon', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
     new User('Brian LeCarpentier', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
     new User('Emerick Chalet', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
