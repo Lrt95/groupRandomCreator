@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Group} from '../models/group.model';
 import {User} from '../models/user.model';
 import {UserService} from '../services/user.service';
 import {GroupService} from '../services/group.service';
+import {DataStorageService} from '../shared/data-storage.service';
 
 @Component({
   selector: 'app-group',
@@ -16,9 +17,12 @@ export class GroupComponent implements OnInit {
   groupSelect = false;
 
   constructor(private userService: UserService,
-              private groupService: GroupService) { }
+              private groupService: GroupService,
+              private dataStorage: DataStorageService) { }
 
   ngOnInit() {
+    this.dataStorage.getUsers();
+    this.dataStorage.getGroup();
     if (this.groupService.groups.length !== 0) {
       this.groupSelect = true;
     }
@@ -47,6 +51,7 @@ export class GroupComponent implements OnInit {
     } else if ( this.groupService.groups[numberOfGroups].member.length === 0) {
       this.groupService.groups.pop();
     }
+    this.dataStorage.storeGroup();
   }
 
    randomUser(users) {
@@ -76,4 +81,5 @@ export class GroupComponent implements OnInit {
     this.groupService.clearGroup();
     this.groupSelect = false;
   }
+
 }
