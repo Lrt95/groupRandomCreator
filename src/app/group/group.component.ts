@@ -14,7 +14,7 @@ export class GroupComponent implements OnInit {
 
 
   private RandomUsers: User[];
-  groupSelect = false;
+  groupSelect = true;
 
   constructor(private userService: UserService,
               private groupService: GroupService,
@@ -23,9 +23,6 @@ export class GroupComponent implements OnInit {
   ngOnInit() {
     this.dataStorage.getUsers();
     this.dataStorage.getGroup();
-    if (this.groupService.groups.length !== 0) {
-      this.groupSelect = true;
-    }
     this.userService.usersPresent = this.userService.users;
   }
 
@@ -39,7 +36,7 @@ export class GroupComponent implements OnInit {
 
    getGroups(numberOfGroups: number) {
     this.groupService.groups = [];
-    this.RandomUsers = this.randomUser(this.userService.usersPresent);
+    this.RandomUsers = this.getRandomUser(this.userService.usersPresent);
     let selectGroup = 0;
     for (let groupName = 1 ; groupName <= numberOfGroups + 1  ; groupName++) {
       this.groupService.groups.push(new Group(groupName, '', []));
@@ -51,10 +48,10 @@ export class GroupComponent implements OnInit {
     } else if ( this.groupService.groups[numberOfGroups].member.length === 0) {
       this.groupService.groups.pop();
     }
-    this.dataStorage.storeGroup();
+    // this.dataStorage.storeGroup();
   }
 
-   randomUser(users) {
+   getRandomUser(users) {
     let rand;
     let index = -1;
     const length = users.length;
@@ -75,6 +72,15 @@ export class GroupComponent implements OnInit {
       this.groupService.groups[numberOfGroups - groupIndex].member.push(this.groupService.groups[numberOfGroups].member.pop());
     } while (this.groupService.groups[numberOfGroups].member.length !== 0);
     this.groupService.groups.pop();
+  }
+
+  getNeverTogether() {
+    for (const nbGroup = 0; nbGroup <= this.groupService.groups.length - 1;) {
+      for (const nbMember = 0; nbMember <= this.groupService.groups[nbGroup].member.length - 1;) {
+
+
+      }
+    }
   }
 
   onClearGroup() {

@@ -17,6 +17,7 @@ export class UsersComponent implements OnInit {
     if (this.userService.usersPresent.length === 0) {
       this.userService.usersPresent = this.userService.users;
     }
+    console.log(this.userService.users);
   }
 
    onUser(i: number) {

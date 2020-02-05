@@ -6,7 +6,7 @@
   </div>
   <div class="row">
       <ul class="list-group list-group-horizontal">
-        <li class="list-group-item" style="margin: 5px; width: 190px" *ngFor="let group of groupService.groups">
+        <li class="list-group-item" style="margin: 5px; width: 190px" *ngFor="let group of groupService.oldGroups">
             <p>Groupe : {{ group.groupName }}</p>
             <div *ngFor="let member of group.member">
               <img [src]="member.imagePath" height="50" width="50" >

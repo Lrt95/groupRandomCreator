@@ -30,7 +30,7 @@ export class DataStorageService {
 
   getGroup() {
     this.http.get<Group[]>('https://pifogroup-7b34b.firebaseio.com/groups.json').subscribe( response => {
-      this.groupService.groups = response;
+      this.groupService.oldGroups = response;
     });
   }
 }
