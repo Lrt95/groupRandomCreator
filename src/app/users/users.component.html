@@ -1,31 +1,18 @@
 <div class="container">
-  <div class="row" *ngIf="!groupeSelect">
-    <div class="col-xs-7" style="padding: 2rem">
+  <div row class="row">
+    <div class="col-md-6">
       <h2>Présent</h2>
       <ul class="list-group">
-        <li class="list-group" *ngFor="let user of users, let i = index" style="margin:  2px">
-          <a href="#" (click)="onUser(i)" style="cursor: pointer"><img [src]="user.imagePath" height="50" width="50" >{{ user.name }}</a>
+        <li class="list-group" *ngFor="let user of userService.usersPresent, let i = index" style="margin:  2px">
+          <a (click)="onUser(i)" style="cursor: pointer"><img [src]="user.imagePath" height="50" width="50" >{{ user.name }}</a>
         </li>
       </ul>
     </div>
-    <div class="col-xs-7" style="padding: 2rem">
+    <div class="col-md-6">
       <h2>Absent</h2>
       <ul class="list-group">
-        <li class="list-group" *ngFor="let delUser of delUsers, let n = index" style="margin:  2px">
-          <a href="#" (click)="onDelUser(n)" style="cursor: pointer"><img [src]="delUser.imagePath" height="50" width="50" >{{ delUser.name }}</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="row">
-    <button *ngIf="!groupeSelect" class="btn btn-primary" (click)="onGroup()">GROUP</button>
-  </div>
-  <div class="row">
-    <div class="col-xs-7">
-      <ul class="list-group list-group-horizontal">
-        <li class="list-group-item" style="margin: 5px" *ngFor="let group of groups">
-          <p>Groupe : {{ group.groupName }}</p>
-          <p *ngFor="let member of group.member"><img [src]="member.imagePath" height="50" width="50" >{{ member.name }}</p>
+        <li class="list-group" *ngFor="let delUser of userService.usersAbsent, let n = index" style="margin:  2px">
+          <a (click)="onDelUser(n)" style="cursor: pointer"><img [src]="delUser.imagePath" height="50" width="50" >{{ delUser.name }}</a>
         </li>
       </ul>
     </div>

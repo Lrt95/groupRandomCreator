@@ -5,7 +5,9 @@ import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { GroupComponent } from './group/group.component';
 import { HeaderComponent } from './header/header.component';
-import { DeleteUserGroupComponent } from './delete-user-group/delete-user-group.component';
+import {RouterModule} from '@angular/router';
+import {AppRoutingModule} from './app-routing.module';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -13,13 +15,15 @@ import { DeleteUserGroupComponent } from './delete-user-group/delete-user-group.
     AppComponent,
     UsersComponent,
     GroupComponent,
-    HeaderComponent,
-    DeleteUserGroupComponent
+    HeaderComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule,
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [DeleteUserGroupComponent],
+  providers: [UsersComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
