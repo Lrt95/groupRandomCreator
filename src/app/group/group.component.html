@@ -8,15 +8,22 @@
       <ul class="list-group list-group-horizontal">
         <li class="list-group-item" style="margin: 5px; width: 190px" *ngFor="let group of groupService.oldGroups">
             <p>Groupe : {{ group.groupName }}</p>
-            <div *ngFor="let member of group.member">
-              <img [src]="member.imagePath" height="50" width="50" >
-              <p>{{ member.name }}</p>
+            <div *ngFor="let member of group.member"
+                 style="display: flex;
+                 flex-direction: column;
+                 align-items: center;
+                 margin-bottom: 5px">
+              <div>
+                <img [src]="member.imagePath" height="100" width="100" >
+              </div>
+              <div>{{ member.name }}</div>
             </div>
         </li>
       </ul>
   </div>
   <div >
     <button *ngIf="groupSelect" class="btn btn-primary" (click)="onClearGroup()">Clear Groups</button>
+    <button *ngIf="groupSelect" class="btn btn-primary" (click)="onReset()">reset</button>
   </div>
 </div>
 

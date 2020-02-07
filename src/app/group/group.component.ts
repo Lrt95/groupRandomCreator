@@ -12,21 +12,20 @@ import {DataStorageService} from '../shared/data-storage.service';
 })
 export class GroupComponent implements OnInit {
 
-
   private RandomUsers: User[];
   groupSelect = true;
   tabUser = [];
+  neverTogether = false;
 
   constructor(private userService: UserService,
               private groupService: GroupService,
-              private dataStorage: DataStorageService) { }
-
-  ngOnInit() {
+              private dataStorage: DataStorageService) {
     this.dataStorage.getUsersNew();
     this.dataStorage.getGroup();
-    if (this.userService.usersPresent.length === 0) {
-      this.userService.usersPresent = this.userService.usersNew;
-    }
+  }
+
+  ngOnInit() {
+    console.log(this.userService.usersPresent);
   }
 
    onGroup() {
@@ -53,8 +52,12 @@ export class GroupComponent implements OnInit {
       this.groupService.groups.pop();
     }
     this.getIdGroup();
-    this.setIdGroup();
-    this.dataStorage.storeGroup();
+    if (!this.neverTogether) {
+      this.setIdGroup();
+      this.dataStorage.storeGroup();
+    } else {
+      this.onGroup();
+    }
   }
 
    getRandomUser(users) {
@@ -86,20 +89,30 @@ export class GroupComponent implements OnInit {
       for (let nbMember = 0; nbMember <= this.groupService.groups[numberGroup].member.length - 1; nbMember++) {
         this.tabUser.push(this.groupService.groups[numberGroup].member[nbMember].id);
       }
-      console.log(this.tabUser);
+      console.log("First :" + this.tabUser);
       let count = 1;
       do {
-        const isEqual = (elt) => elt === count;
-        if (this.tabUser.includes(count)) {
-          this.tabUser.splice(this.tabUser.findIndex(isEqual), 1);
-          console.log(this.tabUser);
-          if (this.tabUser.includes(count)) {
-            this.onGroup();
-          }
-        } else {
-          count++;
+        let indices = [];
+        let élément = count;
+        let idx = this.tabUser.indexOf(élément);
+        while (idx != -1) {
+          indices.push(idx);
+          idx = this.tabUser.indexOf(élément, idx + 1);
+          console.log("indice" + indices);
         }
-      } while (this.tabUser.length !== 0);
+        if (indices.length >= 2){
+          console.log(">2" + this.tabUser);
+          this.neverTogether = true;
+          console.log(this.neverTogether);
+          return;
+        } else if (this.neverTogether) {
+          this.neverTogether = false;
+        }
+        if (this.neverTogether) {
+          break;
+        }
+        count++;
+      } while (count !== this.groupService.groups[numberGroup].member.length);
       this.tabUser = [];
     }
   }
@@ -111,10 +124,18 @@ export class GroupComponent implements OnInit {
         this.userService.usersNew.push(this.groupService.groups[numberGroup].member[nbMember]);
       }
     }
-    console.log(this.userService.usersNew);
+    for( let nbMember = 0; nbMember <= this.userService.usersAbsent.length - 1; nbMember++) {
+      this.userService.usersAbsent[nbMember].id = 10;
+      this.userService.usersNew.push(this.userService.usersAbsent[nbMember]);
+    }
+    console.log("set group : " + this.userService.usersNew);
     this.dataStorage.storeUsersNew();
   }
 
+  onReset(){
+    this.dataStorage.getUsers();
+    this.userService.usersPresent = this.userService.users;
+  }
   onClearGroup() {
     this.groupService.clearGroup();
     this.groupSelect = false;

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { User } from '../models/user.model';
 import {UserService} from '../services/user.service';
+import {DataStorageService} from "../shared/data-storage.service";
 
 
 
@@ -11,13 +12,15 @@ import {UserService} from '../services/user.service';
 })
 export class UsersComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private dataService: DataStorageService) {
+    if(this.userService.usersAbsent.length === 0) {
+      this.userService.usersPresent = this.userService.usersNew;
+    }
+  }
 
   ngOnInit() {
-    if (this.userService.usersPresent.length === 0) {
-      this.userService.usersPresent = this.userService.users;
-    }
-    console.log(this.userService.users);
+    console.log(this.userService.usersPresent);
   }
 
    onUser(i: number) {
