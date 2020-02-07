@@ -20,11 +20,26 @@ export class DataStorageService {
   );
   }
 
+  getUsersNew() {
+    this.http.get<User[]>('https://pifogroup-7b34b.firebaseio.com/users-new.json').subscribe(response => {
+       this.userService.usersNew = response;
+    }
+  );
+  }
+
   storeGroup() {
     const groups = this.groupService.groups;
     this.http.put('https://pifogroup-7b34b.firebaseio.com/groups.json',
       groups).subscribe(response => {
         console.log(response);
+    });
+  }
+
+  storeUsersNew() {
+    const users = this.userService.usersNew;
+    this.http.put('https://pifogroup-7b34b.firebaseio.com/users-new.json',
+      users).subscribe(response => {
+      console.log(response);
     });
   }
 

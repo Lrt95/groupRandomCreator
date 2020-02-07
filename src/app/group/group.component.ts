@@ -22,12 +22,11 @@ export class GroupComponent implements OnInit {
               private dataStorage: DataStorageService) { }
 
   ngOnInit() {
-    this.dataStorage.getUsers();
+    this.dataStorage.getUsersNew();
     this.dataStorage.getGroup();
     if (this.userService.usersPresent.length === 0) {
-      this.userService.usersPresent = this.userService.users;
+      this.userService.usersPresent = this.userService.usersNew;
     }
-
   }
 
    onGroup() {
@@ -40,6 +39,7 @@ export class GroupComponent implements OnInit {
 
    getGroups(numberOfGroups: number) {
     this.groupService.groups = [];
+    this.userService.usersNew = [];
     this.RandomUsers = this.getRandomUser(this.userService.usersPresent);
     let selectGroup = 0;
     for (let groupName = 1 ; groupName <= numberOfGroups + 1  ; groupName++) {
@@ -53,6 +53,7 @@ export class GroupComponent implements OnInit {
       this.groupService.groups.pop();
     }
     this.getIdGroup();
+    this.setIdGroup();
     this.dataStorage.storeGroup();
   }
 
@@ -80,16 +81,39 @@ export class GroupComponent implements OnInit {
   }
 
   getIdGroup() {
-    for (let numberGroup = 0; numberGroup <= this.groupService.groups.length - 1; numberGroup++){
+    this.tabUser = [];
+    for (let numberGroup = 0; numberGroup <= this.groupService.groups.length - 1; numberGroup++) {
       for (let nbMember = 0; nbMember <= this.groupService.groups[numberGroup].member.length - 1; nbMember++) {
-        this.groupService.groups[numberGroup].member[nbMember].id = numberGroup + 1;
         this.tabUser.push(this.groupService.groups[numberGroup].member[nbMember].id);
       }
+      console.log(this.tabUser);
+      let count = 1;
+      do {
+        const isEqual = (elt) => elt === count;
+        if (this.tabUser.includes(count)) {
+          this.tabUser.splice(this.tabUser.findIndex(isEqual), 1);
+          console.log(this.tabUser);
+          if (this.tabUser.includes(count)) {
+            this.onGroup();
+          }
+        } else {
+          count++;
+        }
+      } while (this.tabUser.length !== 0);
+      this.tabUser = [];
     }
-    console.log(this.tabUser);
   }
 
-  
+  setIdGroup() {
+    for (let numberGroup = 0; numberGroup <= this.groupService.groups.length - 1; numberGroup++) {
+      for (let nbMember = 0; nbMember <= this.groupService.groups[numberGroup].member.length - 1; nbMember++) {
+        this.groupService.groups[numberGroup].member[nbMember].id = numberGroup + 1;
+        this.userService.usersNew.push(this.groupService.groups[numberGroup].member[nbMember]);
+      }
+    }
+    console.log(this.userService.usersNew);
+    this.dataStorage.storeUsersNew();
+  }
 
   onClearGroup() {
     this.groupService.clearGroup();

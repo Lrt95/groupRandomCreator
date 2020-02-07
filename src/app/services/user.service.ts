@@ -40,6 +40,7 @@ export class UserService {
   // ];
 
   public users: User[] = []
+  public usersNew: User[] = []
   public usersAbsent: User[] = [];
   public usersPresent: User[] = [];
 
