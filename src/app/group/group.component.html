@@ -1,30 +1,30 @@
-<div class="container">
-  <h1>Groupes en cours</h1>
-  <div *ngIf="!groupSelect" class="row">
-    <div class="align-items-md-center">
-      <button class="btn btn-primary" (click)="onGroup()">GROUP</button>
-    </div>
-  </div>
-  <div class="row">
-      <ul class="list-group list-group-horizontal">
-        <li class="list-group-item" style="margin: 5px; width: 190px" *ngFor="let group of groupService.oldGroups">
-            <p>Groupe : {{ group.groupName }}</p>
+<div style="display: flex; flex-direction: column; align-items: center ">
+    <h1>Groupes pour la semaine</h1>
+    <div class="row">
+      <div *ngIf="show">
+        <ul class="list-group list-group-horizontal">
+          <li  class="list-group-item" *ngFor="let group of groupService.oldGroups">
+            <p class="title-group">Groupe : {{ group.groupName }}</p>
             <div *ngFor="let member of group.member"
                  style="display: flex;
-                 flex-direction: column;
-                 align-items: center;
-                 margin-bottom: 5px">
+               flex-direction: column;
+               align-items: center;
+               margin-bottom: 5px">
               <div>
-                <img [src]="member.imagePath" height="100" width="100" >
+                <img [src]="member.imagePath">
               </div>
-              <div>{{ member.name }}</div>
+              <div class="member">{{ member.name }}</div>
             </div>
-        </li>
-      </ul>
-  </div>
-  <div >
-    <button *ngIf="groupSelect" class="btn btn-primary" (click)="onClearGroup()">Clear Groups</button>
-    <button *ngIf="groupSelect" class="btn btn-primary" (click)="onReset()">reset</button>
-  </div>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="!show" >
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+    </div>
+    <div >
+      <button *ngIf="!groupSelect" class="btn btn-secondary" (click)="onGroup()">Nouveau Groupes</button>
+    </div>
 </div>
+
 

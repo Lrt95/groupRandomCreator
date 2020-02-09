@@ -8,6 +8,8 @@ import { HeaderComponent } from './header/header.component';
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
+import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
+
 
 
 @NgModule({
@@ -15,13 +17,16 @@ import {HttpClientModule} from '@angular/common/http';
     AppComponent,
     UsersComponent,
     GroupComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoadingSpinnerComponent
+
   ],
   imports: [
     BrowserModule,
     RouterModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+
   ],
   providers: [UsersComponent],
   bootstrap: [AppComponent]

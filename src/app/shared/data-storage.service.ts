@@ -21,18 +21,13 @@ export class DataStorageService {
   }
 
   getUsersNew() {
-    this.http.get<User[]>('https://pifogroup-7b34b.firebaseio.com/users-new.json').subscribe(response => {
-       this.userService.usersNew = response;
-    }
-  );
+    return this.http.get<User[]>('https://pifogroup-7b34b.firebaseio.com/users-new.json');
   }
 
   storeGroup() {
     const groups = this.groupService.groups;
-    this.http.put('https://pifogroup-7b34b.firebaseio.com/groups.json',
-      groups).subscribe(response => {
-        console.log(response);
-    });
+    return this.http.put<Group[]>('https://pifogroup-7b34b.firebaseio.com/groups.json',
+      groups);
   }
 
   storeUsersNew() {
@@ -44,8 +39,6 @@ export class DataStorageService {
   }
 
   getGroup() {
-    this.http.get<Group[]>('https://pifogroup-7b34b.firebaseio.com/groups.json').subscribe( response => {
-      this.groupService.oldGroups = response;
-    });
+    return this.http.get<Group[]>('https://pifogroup-7b34b.firebaseio.com/groups.json');
   }
 }

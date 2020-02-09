@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { User } from '../models/user.model';
 import {UserService} from '../services/user.service';
-import {DataStorageService} from "../shared/data-storage.service";
+import {DataStorageService} from '../shared/data-storage.service';
 
 
 
@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
 
   constructor(private userService: UserService,
               private dataService: DataStorageService) {
-    if(this.userService.usersAbsent.length === 0) {
+    if (this.userService.usersAbsent.length === 0) {
       this.userService.usersPresent = this.userService.usersNew;
     }
   }
