@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "dist/groupRandomCreator",
     "ignore": [
       "firebase.json",
       "**/.*",

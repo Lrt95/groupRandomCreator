@@ -9,6 +9,9 @@ import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
+import { AuthComponent } from './auth/auth.component';
+import {FormsModule} from '@angular/forms';
+import {AlertComponent} from './shared/Alert/alert.component';
 
 
 
@@ -18,7 +21,9 @@ import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.
     UsersComponent,
     GroupComponent,
     HeaderComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AuthComponent,
+    AlertComponent
 
   ],
   imports: [
@@ -26,6 +31,7 @@ import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.
     RouterModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
 
   ],
   providers: [UsersComponent],
