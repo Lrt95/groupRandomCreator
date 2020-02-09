@@ -1,0 +1,25 @@
+[debug] [2020-02-09T15:57:36.712Z] ----------------------------------------------------------------------
+[debug] [2020-02-09T15:57:36.714Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\anton\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2020-02-09T15:57:36.715Z] CLI Version:   7.12.1
+[debug] [2020-02-09T15:57:36.715Z] Platform:      win32
+[debug] [2020-02-09T15:57:36.715Z] Node Version:  v10.16.0
+[debug] [2020-02-09T15:57:36.716Z] Time:          Sun Feb 09 2020 16:57:36 GMT+0100 (GMT+01:00)
+[debug] [2020-02-09T15:57:36.716Z] ----------------------------------------------------------------------
+[debug] [2020-02-09T15:57:36.716Z] 
+[debug] [2020-02-09T15:57:36.727Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-02-09T15:57:36.728Z] > authorizing via signed-in user
+[debug] [2020-02-09T15:57:36.728Z] [iam] checking project pifogroup-7b34b for permissions ["firebase.projects.get"]
+[debug] [2020-02-09T15:57:36.730Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/pifogroup-7b34b:testIamPermissions  
+
+[debug] [2020-02-09T15:57:37.530Z] <<< HTTP RESPONSE 200
+[debug] [2020-02-09T15:57:37.535Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/pifogroup-7b34b  
+ 
+[debug] [2020-02-09T15:57:37.743Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\anton\Desktop\Angular\Pifogroup\groupRandomCreator'...
+[info] 
+[debug] [2020-02-09T15:57:37.754Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/pifogroup-7b34b/webApps/-/config  
+ 
+[debug] [2020-02-09T15:57:38.213Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000

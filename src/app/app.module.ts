@@ -5,7 +5,11 @@ import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { GroupComponent } from './group/group.component';
 import { HeaderComponent } from './header/header.component';
-import { DeleteUserGroupComponent } from './delete-user-group/delete-user-group.component';
+import {RouterModule} from '@angular/router';
+import {AppRoutingModule} from './app-routing.module';
+import {HttpClientModule} from '@angular/common/http';
+import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
+
 
 
 @NgModule({
@@ -14,12 +18,17 @@ import { DeleteUserGroupComponent } from './delete-user-group/delete-user-group.
     UsersComponent,
     GroupComponent,
     HeaderComponent,
-    DeleteUserGroupComponent
+    LoadingSpinnerComponent
+
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule,
+    AppRoutingModule,
+    HttpClientModule,
+
   ],
-  providers: [DeleteUserGroupComponent],
+  providers: [UsersComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
