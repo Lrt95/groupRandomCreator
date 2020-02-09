@@ -1,22 +1,30 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-3">
-
-      <ul class="list-group">
-        <li class="list-group-item">
-          Etudiant - 1
-        </li>
-        <li class="list-group-item">
-          Etudiant - 2
-        </li>
-        <li class="list-group-item">
-          Etudiant - 3
-        </li>
-        <li class="list-group-item">
-          Etudiant - 4
-        </li>
-      </ul>
-    <p>Test</p>
+<div style="display: flex; flex-direction: column; align-items: center ">
+    <h1>Groupes pour la semaine</h1>
+    <div class="row">
+      <div *ngIf="show">
+        <ul class="list-group list-group-horizontal">
+          <li  class="list-group-item" *ngFor="let group of groupService.oldGroups">
+            <p class="title-group">Groupe : {{ group.groupName }}</p>
+            <div *ngFor="let member of group.member"
+                 style="display: flex;
+               flex-direction: column;
+               align-items: center;
+               margin-bottom: 5px">
+              <div>
+                <img [src]="member.imagePath">
+              </div>
+              <div class="member">{{ member.name }}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="!show" >
+        <app-loading-spinner></app-loading-spinner>
+      </div>
     </div>
-  </div>
+    <div >
+      <button *ngIf="!groupSelect" class="btn btn-secondary" (click)="onGroup()">Nouveau Groupes</button>
+    </div>
 </div>
+
+

@@ -5,7 +5,12 @@ import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { GroupComponent } from './group/group.component';
 import { HeaderComponent } from './header/header.component';
-import { UserEditComponent } from './users/user-edit/user-edit.component';
+import {RouterModule} from '@angular/router';
+import {AppRoutingModule} from './app-routing.module';
+import {HttpClientModule} from '@angular/common/http';
+import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
+
+
 
 @NgModule({
   declarations: [
@@ -13,12 +18,17 @@ import { UserEditComponent } from './users/user-edit/user-edit.component';
     UsersComponent,
     GroupComponent,
     HeaderComponent,
-    UserEditComponent
+    LoadingSpinnerComponent
+
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule,
+    AppRoutingModule,
+    HttpClientModule,
+
   ],
-  providers: [],
+  providers: [UsersComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
