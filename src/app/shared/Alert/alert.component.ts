@@ -11,6 +11,6 @@ export class AlertComponent {
   }
 
   onClickClose() {
-    this.auth.error = false;
+    this.auth.error = null;
   }
 }

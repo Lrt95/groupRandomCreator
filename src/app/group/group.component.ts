@@ -25,7 +25,7 @@ export class GroupComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService,
               public groupService: GroupService,
               private dataStorage: DataStorageService,
-              private authService: AuthService) {
+              public authService: AuthService) {
   }
 
 
