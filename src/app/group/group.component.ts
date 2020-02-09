@@ -5,6 +5,7 @@ import {UserService} from '../services/user.service';
 import {GroupService} from '../services/group.service';
 import {DataStorageService} from '../shared/data-storage.service';
 import {Subscription} from 'rxjs';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-group',
@@ -14,7 +15,6 @@ import {Subscription} from 'rxjs';
 export class GroupComponent implements OnInit, OnDestroy {
 
   private RandomUsers: User[];
-  groupSelect = false;
   tabUser = [];
   neverTogether = false;
   subscriptionGroups: Subscription;
@@ -23,8 +23,9 @@ export class GroupComponent implements OnInit, OnDestroy {
   show = true;
 
   constructor(private userService: UserService,
-              private groupService: GroupService,
-              private dataStorage: DataStorageService) {
+              public groupService: GroupService,
+              private dataStorage: DataStorageService,
+              private authService: AuthService) {
   }
 
 
@@ -47,7 +48,7 @@ export class GroupComponent implements OnInit, OnDestroy {
     numberOfGroups = this.userService.usersPresent.length / 4;
     numberOfGroups > 1 ? numberOfGroups = Math.floor(numberOfGroups) : numberOfGroups = Math.round(numberOfGroups);
     this.getGroups(numberOfGroups);
-    this.groupSelect = true;
+    this.authService.btnSelectGroup = true;
     this.show = false;
   }
 
@@ -74,7 +75,7 @@ export class GroupComponent implements OnInit, OnDestroy {
         this.subscriptionGroups = this.dataStorage.getGroup().subscribe( responseOldGroup => {
           this.groupService.oldGroups = responseOldGroup;
           console.log(this.groupService.oldGroups);
-          this.groupSelect = false;
+          this.authService.btnSelectGroup = false;
           this.show = true;
         });
       });
