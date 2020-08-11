@@ -12,6 +12,7 @@ import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.
 import { AuthComponent } from './auth/auth.component';
 import {FormsModule} from '@angular/forms';
 import {AlertComponent} from './shared/Alert/alert.component';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 
 
 
@@ -32,6 +33,7 @@ import {AlertComponent} from './shared/Alert/alert.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    MDBBootstrapModule.forRoot()
 
   ],
   providers: [UsersComponent],

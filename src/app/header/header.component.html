@@ -1,18 +1,35 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Pifogroup</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav">
-        <li routerLinkActive="active">
-          <a class="nav-link" routerLink="/groups">Groupes<span class="sr-only">(current)</span></a>
-        </li>
-        <li routerLinkActive="active">
-        <a class="nav-link" routerLink="/user">Etudiants</a>
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark unique-color" [containerInside]="false">
+  <mdb-navbar-brand><div class="navbar-brand" >Pifogroup</div></mdb-navbar-brand>
+  <links>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="/groups">Groupes<span class="sr-only">(current)</span></a>
       </li>
-        <li routerLinkActive="active">
-        <a class="nav-link" routerLink="/auth">Login</a>
+      <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="/user">Etudiants</a>
       </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+    </ul>
+    <ul class="navbar-nav ml-auto nav-flex-icons">
+      <li class="nav-item">
+        <a class="nav-link">
+          <mdb-icon fab icon="twitter"></mdb-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">
+          <mdb-icon fab icon="google-plus"></mdb-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">
+          <div class="btn-group" mdbDropdown>
+            <mdb-icon fas icon="user" mdbDropdownToggle></mdb-icon>
+            <div class="dropdown-menu dropdown-menu-right dropdown-primary">
+              <a class="dropdown-item" routerLink="/auth">Administration</a>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </links>
+</mdb-navbar>
