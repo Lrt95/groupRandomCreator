@@ -1,25 +1,35 @@
-<div style="display: flex; flex-direction: column; align-items: center ">
+<div class="container">
   <h1>Liste des étudiants</h1>
   <div class="row col-12">
     <div class="col-6">
-      <div>
-        <h2 class="title-group">Présent</h2>
-      </div>
-      <div style="display: flex; flex-wrap: wrap">
-        <div class="col-5" *ngFor="let user of userService.usersPresent, let i = index" style="margin: 2px">
-          <a class="member" (click)="onUser(i)" style="cursor: pointer"><img [src]="user.imagePath" height="50" width="50" >{{ user.name }}</a>
-        </div>
-      </div>
+      <mat-card>
+        <mat-card-header>
+          <h2 class="title-group">Présent</h2>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="display: flex; flex-wrap: wrap">
+            <div class="col-5" *ngFor="let user of userService.usersPresent, let i = index" style="margin: 2px">
+              <a class="member" (click)="onUser(i)" style="cursor: pointer"><img [src]="user.imagePath" height="50" width="50" >{{ user.name }}</a>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
     <div class="col-6">
-      <div>
-        <h2 class="title-group">Absent</h2>
-      </div>
-      <div style="display: flex; flex-wrap: wrap">
-          <div class="col-5" *ngFor="let delUser of userService.usersAbsent, let n = index" style="margin:  2px">
-            <a class="member" (click)="onDelUser(n)" style="cursor: pointer"><img [src]="delUser.imagePath" height="50" width="50" >{{ delUser.name }}</a>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <h2 class="title-group">Absent</h2>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="display: flex; flex-wrap: wrap">
+            <div class="col-5" *ngFor="let delUser of userService.usersAbsent, let n = index" style="margin:  2px">
+              <a class="member" (click)="onDelUser(n)" style="cursor: pointer"><img [src]="delUser.imagePath" height="50" width="50" >{{ delUser.name }}</a>
+            </div>
           </div>
-      </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>
