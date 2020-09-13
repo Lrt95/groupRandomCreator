@@ -10,7 +10,7 @@ import {AuthService} from '../auth/auth.service';
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
-  styleUrls: ['./group.component.css']
+  styleUrls: ['./group.component.scss']
 })
 export class GroupComponent implements OnInit, OnDestroy {
 
@@ -127,7 +127,6 @@ export class GroupComponent implements OnInit, OnDestroy {
         if (indices.length >= 2) {
           console.log('>2' + this.tabUser);
           this.neverTogether = true;
-          console.log(this.neverTogether);
           return;
         } else if (this.neverTogether) {
           this.neverTogether = false;
