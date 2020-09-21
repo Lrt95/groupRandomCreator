@@ -5,8 +5,4 @@ import {Group} from '../models/group.model';
 export class GroupService {
   public groups: Group[] = [];
   public oldGroups: Group[] = [];
-
-  clearGroup() {
-    this.groups = [];
-  }
 }

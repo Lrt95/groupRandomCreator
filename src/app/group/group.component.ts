@@ -1,12 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Group} from '../models/group.model';
 import {User} from '../models/user.model';
 import {UserService} from '../services/user.service';
 import {GroupService} from '../services/group.service';
 import {DataStorageService} from '../shared/data-storage.service';
 import {AuthService} from '../auth/auth.service';
-import {HistoricService} from "../services/historic.service";
-import {Historic} from "../models/historic.model";
+import {HistoricService} from '../services/historic.service';
+import {Historic} from '../models/historic.model';
 
 
 @Component({
@@ -35,7 +35,8 @@ export class GroupComponent implements OnInit {
         }
       }
     );
-    this.dataStorage.getGroup().subscribe( response => {
+    // this.dataStorage.storeUserNew().subscribe();
+    this.dataStorage.getGroup().subscribe(response => {
       this.groupService.oldGroups = response;
       this.show = true;
     });
@@ -57,17 +58,18 @@ export class GroupComponent implements OnInit {
       this.show = false;
       this.historicService.historic = new Historic(new Date(), this.groupService.groups);
       this.dataStorage.storeGroupHistoric().subscribe();
-      this.dataStorage.getGroup().subscribe( responseOldGroup => {
-          this.groupService.oldGroups = responseOldGroup;
-          this.authService.btnSelectGroup = false;
-          this.show = true;
-        });
+      this.dataStorage.getGroup().subscribe(responseOldGroup => {
+        this.groupService.oldGroups = responseOldGroup;
+        this.authService.btnSelectGroup = false;
+        this.show = true;
       });
+    });
   }
 
   private createGroups(numberOfGroups: number) {
     let selectGroup = 0;
-    const randomUsers = this.getRandomUser(this.userService.usersPresent);
+    const randomUsers: User[] = this.check(this.getRandomUser(this.userService.usersPresent));
+    console.log(randomUsers);
     for (let groupName = 1; groupName <= numberOfGroups + 1; groupName++) {
       this.groupService.groups.push(new Group(groupName, '', []));
       this.groupService.groups[selectGroup].member = randomUsers.splice(0, this.membersPerGroup);
@@ -78,12 +80,51 @@ export class GroupComponent implements OnInit {
     } else if (this.groupService.groups[numberOfGroups].member.length === 0) {
       this.groupService.groups.pop();
     }
+    console.log(this.groupService.groups);
     this.groupService.groups.map((group: Group) => {
       group.member.map((member: User) => {
         member.id = group.groupName;
+        group.member.map((memberTemp: User) => {
+          if (member.name !== memberTemp.name) {
+            member.alreadyGrouped.push(memberTemp.name);
+          }
+        });
       });
     });
   }
+
+
+  private check(users: User[]) {
+    let finalUsers: User[] = [];
+    let usersTemp: User[] = [];
+    console.log(users);
+    if (users[0].alreadyGrouped.length <= 1) {
+      return users;
+    }
+    do {
+      if (usersTemp.length === 0){
+        usersTemp.push(users.shift());
+      } else if (usersTemp.length <= 3){
+        const index = usersTemp.length - 1;
+        for (let userIndex = 0; userIndex <= index; userIndex++){
+          if (usersTemp[userIndex].alreadyGrouped.includes(users[0].name)){
+            let move;
+            move = users.shift();
+            users.push(move);
+            break;
+          } else if (userIndex === usersTemp.length - 1) {
+            usersTemp.push(users.shift());
+          }
+        }
+      } else {
+        finalUsers = finalUsers.concat(usersTemp);
+        usersTemp = [];
+      }
+    } while (users.length !== 0);
+    console.log(finalUsers);
+    return finalUsers;
+  }
+
 
   getRandomUser(users) {
     let rand;
