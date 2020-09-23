@@ -8,7 +8,6 @@ import {AuthService} from '../auth/auth.service';
 import {HistoricService} from '../services/historic.service';
 import {Historic} from '../models/historic.model';
 
-
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
@@ -18,6 +17,9 @@ export class GroupComponent implements OnInit {
 
   public show = false;
   public membersPerGroup = 4;
+  private alreadyGrouped: boolean;
+  private historic: Historic;
+  private emptyHistoric: boolean;
 
   constructor(private userService: UserService,
               public groupService: GroupService,
@@ -39,6 +41,15 @@ export class GroupComponent implements OnInit {
     this.dataStorage.getGroup().subscribe(response => {
       this.groupService.oldGroups = response;
       this.show = true;
+    });
+    this.dataStorage.getHistoric().subscribe(response => {
+      if (response === null || response === undefined) {
+        this.emptyHistoric = true;
+      } else {
+        this.emptyHistoric = false;
+        this.historic = response;
+      }
+      console.log(this.historic);
     });
   }
 
@@ -62,67 +73,72 @@ export class GroupComponent implements OnInit {
         this.groupService.oldGroups = responseOldGroup;
         this.authService.btnSelectGroup = false;
         this.show = true;
-      });
-    });
-  }
-
-  private createGroups(numberOfGroups: number) {
-    let selectGroup = 0;
-    const randomUsers: User[] = this.check(this.getRandomUser(this.userService.usersPresent));
-    console.log(randomUsers);
-    for (let groupName = 1; groupName <= numberOfGroups + 1; groupName++) {
-      this.groupService.groups.push(new Group(groupName, '', []));
-      this.groupService.groups[selectGroup].member = randomUsers.splice(0, this.membersPerGroup);
-      selectGroup++;
-    }
-    if (this.groupService.groups[numberOfGroups].member.length <= 2 && this.groupService.groups[numberOfGroups].member.length > 0) {
-      this.getRegroup(this.groupService.groups, numberOfGroups);
-    } else if (this.groupService.groups[numberOfGroups].member.length === 0) {
-      this.groupService.groups.pop();
-    }
-    console.log(this.groupService.groups);
-    this.groupService.groups.map((group: Group) => {
-      group.member.map((member: User) => {
-        member.id = group.groupName;
-        group.member.map((memberTemp: User) => {
-          if (member.name !== memberTemp.name) {
-            member.alreadyGrouped.push(memberTemp.name);
-          }
+        this.dataStorage.getHistoric().subscribe(response => {
+          this.emptyHistoric = false;
+          this.historic = response;
+          console.log(this.historic);
         });
       });
     });
   }
 
-
-  private check(users: User[]) {
-    let finalUsers: User[] = [];
-    let usersTemp: User[] = [];
-    console.log(users);
-    if (users[0].alreadyGrouped.length <= 1) {
-      return users;
-    }
+  private createGroups(numberOfGroups: number) {
     do {
-      if (usersTemp.length === 0){
-        usersTemp.push(users.shift());
-      } else if (usersTemp.length <= 3){
-        const index = usersTemp.length - 1;
-        for (let userIndex = 0; userIndex <= index; userIndex++){
-          if (usersTemp[userIndex].alreadyGrouped.includes(users[0].name)){
-            let move;
-            move = users.shift();
-            users.push(move);
-            break;
-          } else if (userIndex === usersTemp.length - 1) {
-            usersTemp.push(users.shift());
-          }
-        }
-      } else {
-        finalUsers = finalUsers.concat(usersTemp);
-        usersTemp = [];
-      }
-    } while (users.length !== 0);
-    console.log(finalUsers);
-    return finalUsers;
+      this.alreadyGrouped = true;
+      this.checkAlreadyGrouped(numberOfGroups, this.historic);
+    } while (!this.alreadyGrouped);
+    this.groupService.groups.map((group: Group) => {
+      group.member.map((member: User) => {
+        member.id = group.groupName;
+      });
+    });
+  }
+
+
+  private checkAlreadyGrouped(numberOfGroups: number, historicGroups: Historic) {
+    this.shuffleGroups(numberOfGroups);
+    if (!this.emptyHistoric){
+      console.log(historicGroups);
+      Object.values(historicGroups).map((historicGroup, index) => {
+        console.log('Group historic:' + (index + 1));
+        historicGroup.groups.map((groupHistoric: Group) => {
+          const tabGroupHistoric = [];
+          groupHistoric.member.map((memberHistoric: User) => {
+            tabGroupHistoric.push(memberHistoric.name);
+          });
+          this.groupService.groups.map((group: Group) => {
+            const tabGroup = [];
+            group.member.map((member: User) => {
+              tabGroup.push(member.name);
+            });
+            tabGroup.sort();
+            tabGroupHistoric.sort();
+            if (JSON.stringify(tabGroup) === JSON.stringify(tabGroupHistoric)) {
+              console.log('Ensemble');
+              this.alreadyGrouped = false;
+            }
+          });
+        });
+      });
+    } else {
+      this.alreadyGrouped = true;
+    }
+  }
+
+  private shuffleGroups(numberOfGroups: number) {
+    let selectGroup = 0;
+    const randomUsers: User[] = this.getRandomUser(this.userService.usersPresent);
+    for (let groupName = 1; groupName <= numberOfGroups + 1; groupName++) {
+      this.groupService.groups.push(new Group(groupName, '', []));
+      this.groupService.groups[selectGroup].member = randomUsers.splice(0, this.membersPerGroup);
+      selectGroup++;
+    }
+    console.log(this.groupService.groups);
+    if (this.groupService.groups[numberOfGroups].member.length <= 2 && this.groupService.groups[numberOfGroups].member.length > 0) {
+      this.getRegroup(this.groupService.groups, numberOfGroups);
+    } else if (this.groupService.groups[numberOfGroups].member.length === 0) {
+      this.groupService.groups.pop();
+    }
   }
 
 
