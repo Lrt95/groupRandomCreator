@@ -24,6 +24,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { HeaderComponent } from './header/header.component';
+import { HistoriqueComponent } from './historique/historique.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
 
 
 
@@ -37,7 +39,9 @@ import { HeaderComponent } from './header/header.component';
     AuthComponent,
     AlertComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    HistoriqueComponent,
+    CreateGroupComponent
   ],
     imports: [
         BrowserModule,

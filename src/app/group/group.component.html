@@ -3,10 +3,10 @@
     <div class="col-12">
       <div class="space-1"></div>
       <h1>Groupes pour la semaine</h1>
-      <div class="space-2"></div>
-      <div class="button" *ngIf="!authService.btnSelectGroup">
-        <button mat-raised-button color="primary" (click)="onGroup()">Nouveau Groupes</button>
+      <div *ngIf="!show" style="text-align: center">
+        <app-loading-spinner></app-loading-spinner>
       </div>
+      <div class="space-2"></div>
       <div class="group" *ngIf="show">
         <div *ngFor="let group of groupService.oldGroups">
           <mat-card>
@@ -22,9 +22,6 @@
               </div>
             </mat-card-content>
           </mat-card>
-        </div>
-        <div *ngIf="!show">
-          <app-loading-spinner></app-loading-spinner>
         </div>
       </div>
     </div>
