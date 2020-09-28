@@ -1,0 +1,51 @@
+mat-card {
+  text-align: center;
+  margin: 10px;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card-header {
+  display: block;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}
+
+span {
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+  font-size: 30px;
+}
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.button {
+  text-align: center;
+}
+
+button {
+  width: 200px;
+}
+
+.space-1 {
+  height: 20px;
+}
+
+.space-2 {
+  height: 10px;
+}

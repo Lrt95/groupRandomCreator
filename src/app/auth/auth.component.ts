@@ -32,7 +32,7 @@ export class AuthComponent {
     this.authObs.subscribe(resData => {
       this.isLoading = false;
       this.authService.btnSelectGroup = false;
-      this.router.navigate(['./groups']);
+      this.router.navigate(['./create-group']);
       console.log(resData);
     },  errorMessage => {
       this.isLoading = false;
