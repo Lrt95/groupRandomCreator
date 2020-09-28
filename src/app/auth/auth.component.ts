@@ -6,14 +6,15 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-auth',
-  templateUrl: './auth.component.html'
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
   isLoading = false;
   error = null;
-  authObs: Observable<AuthResponseData>
+  authObs: Observable<AuthResponseData>;
 
   onSubmit(form: NgForm) {
 
@@ -31,7 +32,7 @@ export class AuthComponent {
     this.authObs.subscribe(resData => {
       this.isLoading = false;
       this.authService.btnSelectGroup = false;
-      this.router.navigate(['./groups'])
+      this.router.navigate(['./create-group']);
       console.log(resData);
     },  errorMessage => {
       this.isLoading = false;

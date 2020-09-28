@@ -1,7 +1,11 @@
 <div class="backdrop"></div>
 <div class="alert-box">
-  <p>{{ message }}</p>
-  <div class="alert-box-actions">
-    <button class="btn btn-primary" (click)="onClickClose()">Close</button>
-  </div>
+  <mat-card>
+    <mat-card-content>
+      <p>{{ message }}</p>
+      <div class="alert-box-actions">
+        <button mat-raised-button color="primary" (click)="onClickClose()">Close</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
