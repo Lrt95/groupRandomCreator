@@ -23,7 +23,7 @@ export class GroupComponent implements OnInit {
               public groupService: GroupService,
               public historicService: HistoricService,
               private dataStorage: DataStorageService,
-              private authService: AuthService) {
+              public authService: AuthService) {
   }
 
 
