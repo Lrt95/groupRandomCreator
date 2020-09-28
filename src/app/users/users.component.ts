@@ -18,7 +18,6 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.userService.usersPresent);
   }
 
    onUser(i: number) {

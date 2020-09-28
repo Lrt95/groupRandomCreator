@@ -10,7 +10,7 @@ import {DataStorageService} from '../shared/data-storage.service';
 export class HistoriqueComponent implements OnInit {
   public show = false;
   private historic: Historic;
-  private tabHistoric: Historic[] = [];
+  public tabHistoric: Historic[] = [];
   private emptyHistoric: boolean;
 
   constructor(
@@ -26,7 +26,6 @@ export class HistoriqueComponent implements OnInit {
         this.emptyHistoric = false;
         this.historic = response;
         Object.entries(this.historic).map((historic: Historic[]) => {
-          console.log(historic[1]);
           this.tabHistoric.push(historic[1]);
         });
         this.show = true;

@@ -63,7 +63,17 @@ import { CreateGroupComponent } from './create-group/create-group.component';
         MatButtonToggleModule
 
     ],
-  providers: [UsersComponent],
+  providers: [
+    AppComponent,
+    UsersComponent,
+    GroupComponent,
+    LoadingSpinnerComponent,
+    AuthComponent,
+    AlertComponent,
+    FooterComponent,
+    HeaderComponent,
+    HistoriqueComponent,
+    CreateGroupComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

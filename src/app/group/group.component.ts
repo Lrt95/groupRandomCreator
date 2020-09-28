@@ -47,7 +47,6 @@ export class GroupComponent implements OnInit {
         this.emptyHistoric = false;
         this.historic = response;
       }
-      console.log(this.historic);
     });
   }
 }
