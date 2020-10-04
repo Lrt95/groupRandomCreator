@@ -1,6 +1,7 @@
 mat-card {
   text-align: center;
   margin: 10px;
+  min-width: 150px;
 }
 
 mat-card-content {
@@ -24,24 +25,7 @@ span {
   align-items: center;
 }
 
-h1 {
-  text-align: center;
-  font-size: 30px;
-}
-
 .group {
   display: flex;
   flex-wrap: wrap;
-}
-
-.button {
-  text-align: center;
-}
-
-.space-1 {
-  height: 20px;
-}
-
-.space-2 {
-  height: 10px;
 }

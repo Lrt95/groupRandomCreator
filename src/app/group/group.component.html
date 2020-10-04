@@ -1,32 +1,34 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <div class="space-1"></div>
-      <h1>Groupes pour la semaine</h1>
-      <div *ngIf="!show" style="text-align: center">
-        <app-loading-spinner></app-loading-spinner>
-      </div>
-      <div class="space-2"></div>
-      <div class="group" *ngIf="show">
-        <div *ngFor="let group of groupService.oldGroups">
-          <mat-card>
-            <mat-card-header>
-              <h2>Groupe : {{ group.groupName }}</h2>
-            </mat-card-header>
-            <mat-card-content>
-              <div *ngFor="let member of group.member">
-                <div>
-                  <img [src]="member.imagePath">
-                </div>
-                <span><h4>{{ member.name }}</h4></span>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Groupes pour la semaine</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="!show" style="text-align: center">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div class="group" *ngIf="show">
+      <div *ngFor="let group of groupService.oldGroups">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Groupe : {{ group.groupName }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div *ngFor="let member of group.member">
+              <div>
+                <img [src]="member.imagePath">
               </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
+              <span><h4>{{ member.name }}</h4></span>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>
+
+
+
+
 
 
 

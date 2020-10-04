@@ -44,7 +44,7 @@ export class DataStorageService {
   }
 
   getHistoric() {
-    return this.http.get<Historic>('https://pifogroup-7b34b.firebaseio.com/historic.json');
+    return this.http.get<Historic[]>('https://pifogroup-7b34b.firebaseio.com/historic.json');
   }
 
   getGroup() {

@@ -9,8 +9,7 @@ import {DataStorageService} from '../shared/data-storage.service';
 })
 export class HistoriqueComponent implements OnInit {
   public show = false;
-  private historic: Historic;
-  public tabHistoric: Historic[] = [];
+  public historics: Historic[];
   private emptyHistoric: boolean;
 
   constructor(
@@ -19,15 +18,12 @@ export class HistoriqueComponent implements OnInit {
 
 
   ngOnInit() {
-    this.dataStorage.getHistoric().subscribe(response => {
+    this.dataStorage.getHistoric().subscribe((response: Historic[]) => {
       if (response === null || response === undefined) {
         this.emptyHistoric = true;
       } else {
         this.emptyHistoric = false;
-        this.historic = response;
-        Object.entries(this.historic).map((historic: Historic[]) => {
-          this.tabHistoric.push(historic[1]);
-        });
+        this.historics = Object.values(response);
         this.show = true;
       }
     });

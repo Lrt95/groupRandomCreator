@@ -23,7 +23,6 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { HeaderComponent } from './header/header.component';
 import { HistoriqueComponent } from './historique/historique.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 
@@ -39,7 +38,6 @@ import { CreateGroupComponent } from './create-group/create-group.component';
     AuthComponent,
     AlertComponent,
     FooterComponent,
-    HeaderComponent,
     HistoriqueComponent,
     CreateGroupComponent
   ],
@@ -71,7 +69,6 @@ import { CreateGroupComponent } from './create-group/create-group.component';
     AuthComponent,
     AlertComponent,
     FooterComponent,
-    HeaderComponent,
     HistoriqueComponent,
     CreateGroupComponent],
   bootstrap: [AppComponent]
