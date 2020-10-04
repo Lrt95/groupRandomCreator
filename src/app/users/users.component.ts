@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { User } from '../models/user.model';
 import {UserService} from '../services/user.service';
+import {DataStorageService} from "../shared/data-storage.service";
 
 
 
@@ -11,14 +12,21 @@ import {UserService} from '../services/user.service';
 })
 export class UsersComponent implements OnInit {
 
-  constructor(public userService: UserService) {
+  constructor(public userService: UserService,
+              private dataStorage: DataStorageService,) {
     if (this.userService.usersAbsent.length === 0) {
       this.userService.usersPresent = this.userService.usersNew;
     }
   }
 
   ngOnInit() {
-    console.log(this.userService.usersPresent);
+    if (this.userService.usersPresent.length === 0) {
+      this.dataStorage.getUsersNew().subscribe(response => {
+          this.userService.usersNew = response;
+          this.userService.usersPresent = this.userService.usersNew;
+          }
+      );
+    }
   }
 
    onUser(i: number) {

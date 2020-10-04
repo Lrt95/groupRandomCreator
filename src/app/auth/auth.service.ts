@@ -19,7 +19,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   private API_KEY = 'AIzaSyBUw8o5b5PdzHf1NAPBaBmh-Wo6XfbJ6Bo';
-  btnSelectGroup = true;
+  btnSelectGroup = false;
 
   login(email: string, password: string) {
     return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + this.API_KEY,

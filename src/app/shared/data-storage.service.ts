@@ -34,20 +34,20 @@ export class DataStorageService {
 
   storeGroup() {
     const groups = this.groupService.groups;
-    return this.http.put<Group[]>('https://pifogroup-7b34b.firebaseio.com/groups.json',
+    return this.http.put<Group[]>('https://pifogroup-7b34b.firebaseio.com/groups-test.json',
       groups);
   }
 
   storeGroupHistoric(){
     const historic = this.historicService.historic;
-    return this.http.post<Historic>('https://pifogroup-7b34b.firebaseio.com/historic.json', historic);
+    return this.http.post<Historic>('https://pifogroup-7b34b.firebaseio.com/historic-test.json', historic);
   }
 
   getHistoric() {
-    return this.http.get<Historic>('https://pifogroup-7b34b.firebaseio.com/historic.json');
+    return this.http.get<Historic[]>('https://pifogroup-7b34b.firebaseio.com/historic-test.json');
   }
 
   getGroup() {
-    return this.http.get<Group[]>('https://pifogroup-7b34b.firebaseio.com/groups.json');
+    return this.http.get<Group[]>('https://pifogroup-7b34b.firebaseio.com/groups-test.json');
   }
 }
