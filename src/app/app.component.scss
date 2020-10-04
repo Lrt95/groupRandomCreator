@@ -1,10 +1,10 @@
-mat-drawer-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+mat-drawer-container {
   height: 100%;
+  width: 100%;
 }
 
+mat-drawer-content {
+  height: 100%;
+  width: 100%;
+}
 

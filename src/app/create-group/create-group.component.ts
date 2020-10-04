@@ -19,15 +19,15 @@ export class CreateGroupComponent implements OnInit {
   public showHistoric = false;
   public membersPerGroup = 4;
   private alreadyGrouped: boolean;
-  private historic: Historic;
+  private historic: Historic[];
   private emptyHistoric: boolean;
-  private tabHistoric: Historic[] = [];
+  public tabHistoric: Historic[] = [];
 
   constructor(private userService: UserService,
               public groupService: GroupService,
               public historicService: HistoricService,
               private dataStorage: DataStorageService,
-              private authService: AuthService) {
+              public authService: AuthService) {
   }
 
 
@@ -39,7 +39,6 @@ export class CreateGroupComponent implements OnInit {
         }
       }
     );
-    // this.dataStorage.storeUserNew().subscribe();
     this.dataStorage.getGroup().subscribe(response => {
       this.groupService.oldGroups = response;
       this.show = true;
@@ -55,10 +54,7 @@ export class CreateGroupComponent implements OnInit {
         } else {
           this.emptyHistoric = false;
           this.historic = response;
-          Object.entries(this.historic).map((historic: Historic[]) => {
-            console.log(historic[1]);
-            this.tabHistoric.push(historic[1]);
-          });
+          this.tabHistoric = Object.values(response);
           this.showHistoric = true;
         }
       },
@@ -111,12 +107,10 @@ export class CreateGroupComponent implements OnInit {
   }
 
 
-  private checkAlreadyGrouped(numberOfGroups: number, historicGroups: Historic) {
+  private checkAlreadyGrouped(numberOfGroups: number, historicGroups: Historic[]) {
     this.shuffleGroups(numberOfGroups);
     if (!this.emptyHistoric){
-      console.log(historicGroups);
       Object.values(historicGroups).map((historicGroup, index) => {
-        console.log('Group historic:' + (index + 1));
         historicGroup.groups.map((groupHistoric: Group) => {
           const tabGroupHistoric = [];
           groupHistoric.member.map((memberHistoric: User) => {
@@ -130,7 +124,6 @@ export class CreateGroupComponent implements OnInit {
             tabGroup.sort();
             tabGroupHistoric.sort();
             if (JSON.stringify(tabGroup) === JSON.stringify(tabGroupHistoric)) {
-              console.log('Ensemble');
               this.alreadyGrouped = false;
             }
           });
@@ -149,7 +142,6 @@ export class CreateGroupComponent implements OnInit {
       this.groupService.groups[selectGroup].member = randomUsers.splice(0, this.membersPerGroup);
       selectGroup++;
     }
-    console.log(this.groupService.groups);
     if (this.groupService.groups[numberOfGroups].member.length <= 2 && this.groupService.groups[numberOfGroups].member.length > 0) {
       this.getRegroup(this.groupService.groups, numberOfGroups);
     } else if (this.groupService.groups[numberOfGroups].member.length === 0) {
@@ -176,9 +168,8 @@ export class CreateGroupComponent implements OnInit {
     let groupIndex = 0;
     do {
       groupIndex++;
-      this.groupService.groups[numberOfGroups - groupIndex].member.push(this.groupService.groups[numberOfGroups].member.pop());
-    } while (this.groupService.groups[numberOfGroups].member.length !== 0);
-    this.groupService.groups.pop();
+      this.groupService.groups[numberOfGroups].member.push(this.groupService.groups[numberOfGroups - groupIndex].member.pop());
+    } while (this.groupService.groups[numberOfGroups].member.length < 3);
   }
 
   onReset() {

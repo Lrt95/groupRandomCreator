@@ -1,6 +1,8 @@
 mat-card {
   text-align: center;
   margin: 10px;
+  min-width: 100px;
+  min-height: 650px;
 }
 
 mat-card-content {
@@ -15,8 +17,8 @@ mat-card-header {
 }
 
 img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
 }
 
 span {
