@@ -9,6 +9,6 @@ import {AuthService} from './auth/auth.service';
 })
 export class AppComponent {
 
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService) { }
   title = 'groupRandomCreator';
 }
