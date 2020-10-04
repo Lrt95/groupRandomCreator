@@ -22,12 +22,8 @@
         </div>
         <div class="group" *ngIf="show">
           <div *ngFor="let group of groupService.oldGroups">
-            <mat-card style="max-width: 120px">
-              <mat-card-header>
-                <mat-card-title style="font-size: 12px">
-                  Groupe : {{ group.groupName }}
-                </mat-card-title>
-              </mat-card-header>
+            <div>Groupe : {{ group.groupName }}</div>
+            <mat-card style="width: 90px">
               <mat-card-content>
                 <div *ngFor="let member of group.member">
                   <div>
@@ -53,12 +49,8 @@
         </div>
         <div class="group" *ngIf="tabHistoric.length >= 1">
           <div *ngFor="let groupHistoric of tabHistoric[tabHistoric.length-1].groups">
-            <mat-card style="max-width: 120px">
-              <mat-card-header>
-                <mat-card-title style="font-size: 12px">
-                  Groupe : {{ groupHistoric.groupName }}
-                </mat-card-title>
-              </mat-card-header>
+            <div>Groupe : {{ groupHistoric.groupName }}</div>
+            <mat-card style="max-width: 90px">
               <mat-card-content>
                 <div *ngFor="let memberHistoric of groupHistoric.member">
                   <div>
