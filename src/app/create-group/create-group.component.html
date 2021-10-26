@@ -1,73 +1,133 @@
-<div *ngIf="!authService.btnSelectGroup">
-  <div>
-    <div style="display: flex; justify-content: space-around;">
-      <div class="button">
-        <button mat-raised-button color="primary" (click)="onGroup()">Nouveau Groupes</button>
-      </div>
-      <div class="button">
-        <button mat-raised-button color="primary" (click)="onValid()">Valider</button>
-      </div>
-    </div>
-  </div>
-  <div style="display: flex; flex-direction: row">
-    <mat-card style="width: 50%">
-      <mat-card-header>
-        <mat-card-title>
-          Groupes pour la semaine
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div *ngIf="!show" style="text-align: center">
-          <app-loading-spinner></app-loading-spinner>
+<!--<div *ngIf="!authService.btnSelectGroup">-->
+<div>
+  <mat-card>
+    <mat-card-title style="text-align: left">Nouvelle classe</mat-card-title>
+    <mat-card-content style="align-items: start">
+      <form style="display: flex; flex-direction: column; align-items: flex-start" [formGroup]="formGroup">
+        <div>
+          <mat-form-field appearance="outline" style="margin-right: 5px">
+            <mat-label>Classe</mat-label>
+            <input matInput placeholder="Entrez la classe">
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="margin-right: 5px">
+            <mat-label>Nombres de semaines</mat-label>
+            <input matInput type="number" value="0">
+          </mat-form-field>
         </div>
-        <div class="group" *ngIf="show">
-          <div *ngFor="let group of groupService.oldGroups">
-            <div>Groupe : {{ group.groupName }}</div>
-            <mat-card style="width: 90px">
-              <mat-card-content>
-                <div *ngFor="let member of group.member">
-                  <div>
-                    <img [src]="member.imagePath">
-                  </div>
-                  <span><h4>{{ member.name }}</h4></span>
-                </div>
-              </mat-card-content>
-            </mat-card>
+      <mat-card-title>Etudiants</mat-card-title>
+        <div>
+          <mat-form-field appearance="outline" style="margin-right: 5px">
+            <mat-label>Etudiant</mat-label>
+            <input matInput placeholder="Nom">
+          </mat-form-field>
+          <button mat-mini-fab color="warn" style="width: 40px; margin-top: 10px; margin-right: 10px">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <div style="display: flex; flex-direction: row; align-items: baseline">
+          <button mat-mini-fab color="primary" style="width: 40px; margin-right: 10px">
+            <mat-icon>add</mat-icon>
+          </button>
+          <p>Ajouter étudiant</p>
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          style="margin-top: 20px"
+          [disabled]="!formGroup.valid"
+        >
+          Créer classe
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngFor="let classe of classes" style="overflow: auto">
+    <mat-card-title>Classe: {{classe.name}}</mat-card-title>
+    <mat-card-content style="display: flex; flex-direction: row">
+      <div *ngFor="let week of classe.weeks" style="margin: 5px">
+        <mat-card-subtitle>{{week.name}}</mat-card-subtitle>
+        <div *ngFor="let group of week.group">
+          <p>{{group.name}}</p>
+          <div *ngFor="let user of group.users">
+            <p>{{user.name}}</p>
           </div>
+          <hr/>
         </div>
-      </mat-card-content>
-    </mat-card>
-    <mat-card style="width: 50%" >
-      <mat-card-header>
-        <mat-card-title>
-          Groupes semaine dernière
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div *ngIf="!showHistoric" style="text-align: center">
-          <app-loading-spinner></app-loading-spinner>
-        </div>
-        <div class="group" *ngIf="tabHistoric.length >= 1">
-          <div *ngFor="let groupHistoric of tabHistoric[tabHistoric.length-1].groups">
-            <div>Groupe : {{ groupHistoric.groupName }}</div>
-            <mat-card style="max-width: 90px">
-              <mat-card-content>
-                <div *ngFor="let memberHistoric of groupHistoric.member">
-                  <div>
-                    <img [src]="memberHistoric.imagePath">
-                  </div>
-                  <span><h4>{{ memberHistoric.name }}</h4></span>
-                </div>
-              </mat-card-content>
-            </mat-card>
-          </div>
-        </div>
-        <div *ngIf="tabHistoric.length < 1 ">
-          <h1> Pas d'historique </h1>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+<!--  <div>-->
+<!--    <div style="display: flex; justify-content: space-around;">-->
+<!--      <div class="button">-->
+<!--        <button mat-raised-button color="primary" (click)="onGroup()">Nouveau Groupes</button>-->
+<!--      </div>-->
+<!--      <div class="button">-->
+<!--        <button mat-raised-button color="primary" (click)="onValid()">Valider</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div style="display: flex; flex-direction: row">-->
+<!--    <mat-card style="width: 50%">-->
+<!--      <mat-card-header>-->
+<!--        <mat-card-title>-->
+<!--          Groupes pour la semaine-->
+<!--        </mat-card-title>-->
+<!--      </mat-card-header>-->
+<!--      <mat-card-content>-->
+<!--        <div *ngIf="!show" style="text-align: center">-->
+<!--          <app-loading-spinner></app-loading-spinner>-->
+<!--        </div>-->
+<!--        <div class="group" *ngIf="show">-->
+<!--          <div *ngFor="let group of groupService.oldGroups">-->
+<!--            <div>Groupe : {{ group.groupName }}</div>-->
+<!--            <mat-card style="width: 90px">-->
+<!--              <mat-card-content>-->
+<!--                <div *ngFor="let member of group.member">-->
+<!--                  <div>-->
+<!--                    <img [src]="member.imagePath">-->
+<!--                  </div>-->
+<!--                  <span><h4>{{ member.name }}</h4></span>-->
+<!--                </div>-->
+<!--              </mat-card-content>-->
+<!--            </mat-card>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </mat-card-content>-->
+<!--    </mat-card>-->
+<!--    <mat-card style="width: 50%" >-->
+<!--      <mat-card-header>-->
+<!--        <mat-card-title>-->
+<!--          Groupes semaine dernière-->
+<!--        </mat-card-title>-->
+<!--      </mat-card-header>-->
+<!--      <mat-card-content>-->
+<!--        <div *ngIf="!showHistoric" style="text-align: center">-->
+<!--          <app-loading-spinner></app-loading-spinner>-->
+<!--        </div>-->
+<!--        <div class="group" *ngIf="tabHistoric.length >= 1">-->
+<!--          <div *ngFor="let groupHistoric of tabHistoric[tabHistoric.length-1].groups">-->
+<!--            <div>Groupe : {{ groupHistoric.groupName }}</div>-->
+<!--            <mat-card style="max-width: 90px">-->
+<!--              <mat-card-content>-->
+<!--                <div *ngFor="let memberHistoric of groupHistoric.member">-->
+<!--                  <div>-->
+<!--                    <img [src]="memberHistoric.imagePath">-->
+<!--                  </div>-->
+<!--                  <span><h4>{{ memberHistoric.name }}</h4></span>-->
+<!--                </div>-->
+<!--              </mat-card-content>-->
+<!--            </mat-card>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div *ngIf="tabHistoric.length < 1 ">-->
+<!--          <h1> Pas d'historique </h1>-->
+<!--        </div>-->
+<!--      </mat-card-content>-->
+<!--    </mat-card>-->
+<!--  </div>-->
 </div>
 <div *ngIf="authService.btnSelectGroup">
   <h1> Pas logger</h1>

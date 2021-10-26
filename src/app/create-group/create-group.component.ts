@@ -7,6 +7,13 @@ import {HistoricService} from '../services/historic.service';
 import {DataStorageService} from '../shared/data-storage.service';
 import {Group} from '../models/group.model';
 import {User} from '../models/user.model';
+import userTestList from '../../assets/user.json';
+import {shuffleArray} from '../utils/functions';
+import {WeekModel} from '../models/week.model';
+import {GroupTestModel} from '../models/group-test.model';
+import {UserTestModel} from '../models/user-test.model';
+import {ClassModel} from '../models/class.model';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-create-group',
@@ -22,6 +29,9 @@ export class CreateGroupComponent implements OnInit {
   private historic: Historic[];
   private emptyHistoric: boolean;
   public tabHistoric: Historic[] = [];
+  public classes: ClassModel[] = [];
+  public formGroup: FormGroup;
+
 
   constructor(private userService: UserService,
               public groupService: GroupService,
@@ -30,8 +40,10 @@ export class CreateGroupComponent implements OnInit {
               public authService: AuthService) {
   }
 
-
   ngOnInit() {
+    this.createClass('toto');
+    this.formGroup = new FormGroup({});
+
     this.dataStorage.getUsersNew().subscribe(response => {
         this.userService.usersNew = response;
         if (this.userService.usersPresent.length === 0) {
@@ -44,6 +56,85 @@ export class CreateGroupComponent implements OnInit {
       this.show = true;
     });
     this.getHistoric();
+  }
+
+  private createClass(name: string) {
+    const usersList: string[] = shuffleArray(userTestList);
+    const users: UserTestModel[] = usersList.map(user => {
+      return {alreadyGroupWith: [], name: user};
+    });
+    this.classes.push({name: 'toto', users, weeks: this.createWeeks(12, users) });
+    console.log(this.classes);
+  }
+
+  private createWeeks(weekNumbers: number, users: UserTestModel[]) {
+    const weeks: WeekModel[] = [];
+    for (let x = 1; x <= weekNumbers; x++) {
+        weeks.push({group: this.createGroupsTest(4, [], users), name: 'Semaine ' + x});
+    }
+    return weeks;
+  }
+
+  private createGroupsTest(groupNumbers: number, groups: GroupTestModel[], users: UserTestModel[]): GroupTestModel[] {
+    const usersGroup: UserTestModel[] = [...users];
+    const usersTemp: UserTestModel[] = [];
+    const countGroupNumber = 0;
+    this.addGroupToGroup(usersGroup, usersTemp, countGroupNumber, groupNumbers, groups);
+    this.deleteIncompleteGroup(groups, groupNumbers);
+    this.addUserToAlreadyGroup(groups, users);
+    return groups;
+  }
+
+  private addGroupToGroup(
+    users: UserTestModel[],
+    usersTemp: UserTestModel[],
+    countGroupNumber: number,
+    groupNumbers: number,
+    groups: GroupTestModel[]) {
+    while (users.length > 0) {
+      shuffleArray(users);
+      if (!this.checkOccurrence(users, usersTemp)) {
+        usersTemp.push(users.pop());
+        countGroupNumber++;
+        if (countGroupNumber === groupNumbers || (usersTemp.length >= 1 && users.length === 0)) {
+          groups.push({name: 'Groupe ' + groups.length, users: usersTemp});
+          usersTemp = [];
+          countGroupNumber = 0;
+        }
+      }
+    }
+  }
+
+  private deleteIncompleteGroup(groups: GroupTestModel[], groupNumbers: number) {
+    if (groups[groups.length - 1].users.length < groupNumbers) {
+      groups[groups.length - 2].users =
+        groups[groups.length - 2].users.concat(groups[groups.length - 1].users);
+      groups.pop();
+    }
+  }
+
+  private addUserToAlreadyGroup(groups: GroupTestModel[], users: UserTestModel[]) {
+    groups.forEach((group, indexGroups) => {
+      group.users.forEach((user) => {
+        groups[indexGroups].users.forEach(userAdd => {
+          if (user !== userAdd) {
+            users.find(name => name.name === user.name).alreadyGroupWith.push(userAdd.name);
+          }
+        });
+      });
+    });
+  }
+
+  private checkOccurrence(users: UserTestModel[], usersTemps: UserTestModel[]): boolean {
+    let occurrence = 0;
+    if (usersTemps.length > 0) {
+       usersTemps.forEach(userTemps => {
+         if (users.find(user => user.alreadyGroupWith.includes(userTemps.name))) {
+           occurrence++;
+         }
+      });
+    }
+    return occurrence > 3;
   }
 
   private getHistoric() {
