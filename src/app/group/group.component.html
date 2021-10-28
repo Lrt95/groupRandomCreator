@@ -1,30 +1,27 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Groupes pour la semaine</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div *ngIf="!show" style="text-align: center">
-      <app-loading-spinner></app-loading-spinner>
-    </div>
-    <div class="group" *ngIf="show">
-      <div *ngFor="let group of groupService.oldGroups">
-        <mat-card style="width: 130px">
-          <mat-card-header>
-            <mat-card-title style="font-size: 14px">Groupe : {{ group.groupName }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div *ngFor="let member of group.member">
-              <div>
-                <img [src]="member.imagePath">
-              </div>
-              <span><h4>{{ member.name }}</h4></span>
+<div>
+  <h1>Groupes Coding Factory</h1>
+  <div *ngIf="show" style="text-align: center">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <div *ngIf="!show">
+    <mat-card *ngFor="let classe of codingClassModels; let indexClasse = index">
+      <mat-card-title>{{classe.name}}</mat-card-title>
+      <mat-card-content style="display: flex; flex-direction: row; overflow: auto; justify-content: flex-start">
+        <div *ngFor="let week of classe.weeks; let indexWeek = index" style="margin: 5px; min-width: 110px;"
+             [style.background-color]="setBgColor(indexWeek)">
+          <mat-card-subtitle>{{week.name}}</mat-card-subtitle>
+          <div *ngFor="let group of week.group">
+            <p style="width: 100%">{{group.name}}</p>
+            <div *ngFor="let user of group.users">
+              <p style="width: 100%">{{user.name}}</p>
             </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+            <hr/>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
 
 
 

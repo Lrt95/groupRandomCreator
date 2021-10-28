@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../services/user.service';
-import {GroupService} from '../services/group.service';
 import {DataStorageService} from '../shared/data-storage.service';
-import {Historic} from '../models/historic.model';
+import {CodingClasseModel} from '../models/coding-classe-model';
+import { setBgColor } from '../utils/functions';
+
 
 @Component({
   selector: 'app-group',
@@ -12,23 +12,20 @@ import {Historic} from '../models/historic.model';
 export class GroupComponent implements OnInit {
 
   public show = false;
-  private emptyHistoric: boolean;
+  public codingClassModels: CodingClasseModel[] = [];
+  public setBgColor = setBgColor;
 
-  constructor(private userService: UserService,
-              public groupService: GroupService,
-              private dataStorage: DataStorageService) {
-  }
-
+  constructor(private dataStorage: DataStorageService) {}
 
   ngOnInit() {
-    this.dataStorage.getHistoric().subscribe((response: Historic[]) => {
-      if (response === null || response === undefined) {
-        this.emptyHistoric = true;
-      } else {
-        this.emptyHistoric = false;
-        this.groupService.oldGroups = Object.values(response).pop().groups;
-        this.show = true;
-      }
+    this.show = true;
+    this.dataStorage.getCodingClasses().subscribe(result => {
+      this.show = false;
+      this.codingClassModels = result;
+      console.log(result);
+    }, error => {
+      console.log(error);
     });
+
   }
 }

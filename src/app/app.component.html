@@ -23,22 +23,6 @@
           Groupes
         </a>
         <a
-          mat-list-item
-          [routerLink]="'/historic'"
-          (click)="sidenav.toggle()">
-          <mat-icon>history</mat-icon>
-          <hr/>
-          Historique
-        </a>
-        <a
-          *ngIf="!authService.btnSelectGroup"
-          mat-list-item [routerLink]="'/user'"
-          (click)="sidenav.toggle()">
-          <mat-icon>person</mat-icon>
-          <hr/>
-          Etudiants
-        </a>
-        <a
           *ngIf="!authService.btnSelectGroup"
           mat-list-item
           [routerLink]="'/create-group'"

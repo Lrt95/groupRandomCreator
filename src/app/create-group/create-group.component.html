@@ -1,34 +1,52 @@
-<!--<div *ngIf="!authService.btnSelectGroup">-->
-<div>
+<div *ngIf="!authService.btnSelectGroup">
   <mat-card>
-    <mat-card-title style="text-align: left">Nouvelle classe</mat-card-title>
+    <div style="display: flex; flex-direction: row; justify-content: space-between">
+      <mat-card-title style="text-align: left">Nouvelle promo</mat-card-title>
+      <button mat-raised-button color="warn" (click)="onDelete()">
+        Suprimmer les promo
+      </button>
+    </div>
     <mat-card-content style="align-items: start">
-      <form style="display: flex; flex-direction: column; align-items: flex-start" [formGroup]="formGroup">
+      <form style="display: flex; flex-direction: column; align-items: flex-start"
+            [formGroup]="formGroup"
+      >
         <div>
           <mat-form-field appearance="outline" style="margin-right: 5px">
-            <mat-label>Classe</mat-label>
-            <input matInput placeholder="Entrez la classe">
+            <mat-label>Promo</mat-label>
+            <input matInput placeholder="Entrez la promo" formControlName="classe">
           </mat-form-field>
           <mat-form-field appearance="outline" style="margin-right: 5px">
             <mat-label>Nombres de semaines</mat-label>
-            <input matInput type="number" value="0">
+            <input matInput type="number" value="0" formControlName="week">
           </mat-form-field>
         </div>
-      <mat-card-title>Etudiants</mat-card-title>
-        <div>
-          <mat-form-field appearance="outline" style="margin-right: 5px">
-            <mat-label>Etudiant</mat-label>
-            <input matInput placeholder="Nom">
+        <mat-card-title>Etudiants (Min 4)</mat-card-title>
+        <div
+          *ngFor="let element of studentArray; let index = index"
+        >
+          <mat-form-field formGroupName="student" appearance="outline" style="margin-right: 5px">
+            <mat-label>Etudiant {{index + 1}}</mat-label>
+            <input matInput type="text" name="name" formControlName="{{indexStudent}}">
           </mat-form-field>
-          <button mat-mini-fab color="warn" style="width: 40px; margin-top: 10px; margin-right: 10px">
-            <mat-icon>delete</mat-icon>
+          <button
+            mat-mini-fab
+            color="warn"
+            style="margin-right: 5px; width: 40px"
+            (click)="onClickDeleteStudent(index)"
+
+          >
+            <mat-icon>close</mat-icon>
           </button>
         </div>
         <div style="display: flex; flex-direction: row; align-items: baseline">
-          <button mat-mini-fab color="primary" style="width: 40px; margin-right: 10px">
+          <button
+            mat-button
+            color="primary"
+            (click)="onClickAddStudent()"
+          >
             <mat-icon>add</mat-icon>
+            Ajouter un étudiant
           </button>
-          <p>Ajouter étudiant</p>
         </div>
         <button
           mat-raised-button
@@ -36,101 +54,59 @@
           type="submit"
           style="margin-top: 20px"
           [disabled]="!formGroup.valid"
+          (click)="onSubmit(formGroup.value)"
         >
-          Créer classe
+          Créer promo
         </button>
       </form>
     </mat-card-content>
   </mat-card>
 
-  <mat-card *ngFor="let classe of classes" style="overflow: auto">
-    <mat-card-title>Classe: {{classe.name}}</mat-card-title>
-    <mat-card-content style="display: flex; flex-direction: row">
-      <div *ngFor="let week of classe.weeks" style="margin: 5px">
-        <mat-card-subtitle>{{week.name}}</mat-card-subtitle>
-        <div *ngFor="let group of week.group">
-          <p>{{group.name}}</p>
-          <div *ngFor="let user of group.users">
-            <p>{{user.name}}</p>
+  <div *ngIf="show" style="text-align: center">-->
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <div *ngIf="!show">
+    <mat-card *ngFor="let classe of codingClassModels; let indexClasse = index">
+      <mat-card-title>{{classe.name}}</mat-card-title>
+      <mat-card-content style="display: flex; flex-direction: row; overflow: auto; justify-content: flex-start">
+        <div *ngFor="let week of classe.weeks; let indexWeek = index" style="margin: 5px" [style.background-color]="setBgColor(indexWeek)">
+          <mat-form-field appearance="outline" style="width: 100px">
+            <mat-label>Semaine</mat-label>
+            <input matInput type="text" value="{{week.name}}" (change)="onValueChange($event, indexClasse, indexWeek)">
+          </mat-form-field>
+          <div *ngFor="let group of week.group">
+            <p style="width: 100%">{{group.name}}</p>
+            <div *ngFor="let user of group.users">
+              <p style="width: 100%">{{user.name}}</p>
+            </div>
+            <hr/>
           </div>
-          <hr/>
         </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
+      </mat-card-content>
+      <mat-card-actions>
+        <div style="display: flex; flex-direction: row; justify-content: space-around">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="onSave()"
+          >
+            Sauvegarder promo
+          </button>
 
-<!--  <div>-->
-<!--    <div style="display: flex; justify-content: space-around;">-->
-<!--      <div class="button">-->
-<!--        <button mat-raised-button color="primary" (click)="onGroup()">Nouveau Groupes</button>-->
-<!--      </div>-->
-<!--      <div class="button">-->
-<!--        <button mat-raised-button color="primary" (click)="onValid()">Valider</button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div style="display: flex; flex-direction: row">-->
-<!--    <mat-card style="width: 50%">-->
-<!--      <mat-card-header>-->
-<!--        <mat-card-title>-->
-<!--          Groupes pour la semaine-->
-<!--        </mat-card-title>-->
-<!--      </mat-card-header>-->
-<!--      <mat-card-content>-->
-<!--        <div *ngIf="!show" style="text-align: center">-->
-<!--          <app-loading-spinner></app-loading-spinner>-->
-<!--        </div>-->
-<!--        <div class="group" *ngIf="show">-->
-<!--          <div *ngFor="let group of groupService.oldGroups">-->
-<!--            <div>Groupe : {{ group.groupName }}</div>-->
-<!--            <mat-card style="width: 90px">-->
-<!--              <mat-card-content>-->
-<!--                <div *ngFor="let member of group.member">-->
-<!--                  <div>-->
-<!--                    <img [src]="member.imagePath">-->
-<!--                  </div>-->
-<!--                  <span><h4>{{ member.name }}</h4></span>-->
-<!--                </div>-->
-<!--              </mat-card-content>-->
-<!--            </mat-card>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </mat-card-content>-->
-<!--    </mat-card>-->
-<!--    <mat-card style="width: 50%" >-->
-<!--      <mat-card-header>-->
-<!--        <mat-card-title>-->
-<!--          Groupes semaine dernière-->
-<!--        </mat-card-title>-->
-<!--      </mat-card-header>-->
-<!--      <mat-card-content>-->
-<!--        <div *ngIf="!showHistoric" style="text-align: center">-->
-<!--          <app-loading-spinner></app-loading-spinner>-->
-<!--        </div>-->
-<!--        <div class="group" *ngIf="tabHistoric.length >= 1">-->
-<!--          <div *ngFor="let groupHistoric of tabHistoric[tabHistoric.length-1].groups">-->
-<!--            <div>Groupe : {{ groupHistoric.groupName }}</div>-->
-<!--            <mat-card style="max-width: 90px">-->
-<!--              <mat-card-content>-->
-<!--                <div *ngFor="let memberHistoric of groupHistoric.member">-->
-<!--                  <div>-->
-<!--                    <img [src]="memberHistoric.imagePath">-->
-<!--                  </div>-->
-<!--                  <span><h4>{{ memberHistoric.name }}</h4></span>-->
-<!--                </div>-->
-<!--              </mat-card-content>-->
-<!--            </mat-card>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div *ngIf="tabHistoric.length < 1 ">-->
-<!--          <h1> Pas d'historique </h1>-->
-<!--        </div>-->
-<!--      </mat-card-content>-->
-<!--    </mat-card>-->
-<!--  </div>-->
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="onDeleteCodingClasse(indexClasse)"
+          >
+            Supprimer promo
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>
 <div *ngIf="authService.btnSelectGroup">
-  <h1> Pas logger</h1>
+  <h1> Veuillez vous loggez !</h1>
 </div>
 
 
