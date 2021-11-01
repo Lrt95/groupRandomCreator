@@ -18,8 +18,6 @@ export class CreateGroupComponent implements OnInit {
   public show = false;
   public codingClassModels: CodingClasseModel[] = [];
   public formGroup: FormGroup;
-  public studentArray: [string, FormControl][] = [];
-  public indexStudent: number;
   public setBgColor = setBgColor;
 
   constructor(private dataStorage: DataStorageService, public authService: AuthService) {}
@@ -41,46 +39,15 @@ export class CreateGroupComponent implements OnInit {
     this.formGroup = new FormGroup({
       classe: new FormControl(null, [Validators.required]),
       week: new FormControl(1, [Validators.min(1)]),
-      student: new FormGroup({ 0: this.getStudent() })
+      student: new FormControl(null, [Validators.required])
     });
-    this.indexStudent = 0;
-    this.studentArray.push([
-      this.studentArray.toString(),
-      this.getForm(this.indexStudent.toString(), 'student'),
-    ]);
-  }
-
-  private getForm(key: string, form: string): FormControl {
-    return this.formGroup.get(form).get(key) as FormControl;
-  }
-
-  public onClickAddStudent(): void {
-    this.indexStudent++;
-    this.student.addControl(
-      this.indexStudent.toString(),
-      this.getStudent()
-    );
-    this.studentArray.push([
-      this.indexStudent.toString(),
-      this.getForm(this.indexStudent.toString(), 'student'),
-    ]);
-  }
-
-  public onClickDeleteStudent(index: number): void {
-    this.student.removeControl(
-      this.studentArray[index][0].toString()
-    );
-    this.studentArray.splice(index, 1);
-  }
-
-  private getStudent(): FormControl {
-    return new FormControl(null, [Validators.required]);
   }
 
   public onSubmit(form: any): void {
-    if (Object.values(form).length >= 3) {
+    const studentsArray: string[] = form.student.split('\n');
+    if (studentsArray.length >= 3) {
       const students: UserModel[] = [];
-      Object.values(form.student).forEach((student: string) => {
+      studentsArray.forEach((student: string) => {
         students.push({alreadyGroupWith: [], name: student});
       });
       this.createCodingClass(form.classe, students, form.week);
@@ -122,7 +89,7 @@ export class CreateGroupComponent implements OnInit {
       if (!this.checkOccurrence(users, usersTemp)) {
         usersTemp.push(usersGroup.pop());
         countGroupNumber++;
-        if (countGroupNumber === groupNumbers || (usersTemp.length >= 1 && users.length === 0)) {
+        if (countGroupNumber === groupNumbers || (usersTemp.length >= 1 && usersGroup.length === 0)) {
           groups.push({name: 'Groupe ' + groups.length, users: usersTemp});
           usersTemp = [];
           countGroupNumber = 0;
@@ -133,9 +100,15 @@ export class CreateGroupComponent implements OnInit {
 
   private deleteIncompleteGroup(groups: GroupModel[], groupNumbers: number) {
     if (groups[groups.length - 1].users.length < groupNumbers) {
-      groups[groups.length - 2].users =
-        groups[groups.length - 2].users.concat(groups[groups.length - 1].users);
-      groups.pop();
+      if (groups[groups.length - 1].users.length === 1) {
+        groups[groups.length - 2].users =
+          groups[groups.length - 2].users.concat(groups[groups.length - 1].users);
+        groups.pop();
+      } else if (groups[groups.length - 1].users.length === 2) {
+        groups[groups.length - 2].users.push(groups[groups.length - 1].users[groups[groups.length - 1].users.length - 1]);
+        groups[groups.length - 3].users.push(groups[groups.length - 1].users[groups[groups.length - 1].users.length - 1]);
+        groups.pop();
+      }
     }
   }
 

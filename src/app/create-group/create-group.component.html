@@ -21,33 +21,10 @@
           </mat-form-field>
         </div>
         <mat-card-title>Etudiants (Min 4)</mat-card-title>
-        <div
-          *ngFor="let element of studentArray; let index = index"
-        >
-          <mat-form-field formGroupName="student" appearance="outline" style="margin-right: 5px">
-            <mat-label>Etudiant {{index + 1}}</mat-label>
-            <input matInput type="text" name="name" formControlName="{{indexStudent}}">
-          </mat-form-field>
-          <button
-            mat-mini-fab
-            color="warn"
-            style="margin-right: 5px; width: 40px"
-            (click)="onClickDeleteStudent(index)"
-
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-        </div>
-        <div style="display: flex; flex-direction: row; align-items: baseline">
-          <button
-            mat-button
-            color="primary"
-            (click)="onClickAddStudent()"
-          >
-            <mat-icon>add</mat-icon>
-            Ajouter un étudiant
-          </button>
-        </div>
+        <mat-form-field appearance="outline" style="margin-right: 5px">
+          <mat-label>Etudiants</mat-label>
+          <textarea matInput style="height: 200px" formControlName="student"></textarea>
+        </mat-form-field>
         <button
           mat-raised-button
           color="primary"
@@ -62,7 +39,7 @@
     </mat-card-content>
   </mat-card>
 
-  <div *ngIf="show" style="text-align: center">-->
+  <div *ngIf="show" style="text-align: center">
     <app-loading-spinner></app-loading-spinner>
   </div>
   <div *ngIf="!show">
